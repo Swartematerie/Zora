@@ -183,15 +183,15 @@ void setup() {
               128,                    // stack depth
               NULL,                   // no parameters are being passed
               2,                      //priority
-              &ThemaplankjesHandle);  // task handle
-*/
-  /*xTaskCreate(DrukknopjesTask,      // function name
+              &ThemaplankjesHandle);  // task handle*/
+              
+xTaskCreate(DrukknopjesTask,      // function name
               "Drukknopjes",        // human readable name
               128,                  // stack depth
               NULL,                 // no parameters are being passed
               2,                    //priority
               &DrukknopjesHandle);  // task handle
-*/
+
   /*xTaskCreate(EventTask,      // function name
               "Event",        // human readable name
               128,            // stack depth

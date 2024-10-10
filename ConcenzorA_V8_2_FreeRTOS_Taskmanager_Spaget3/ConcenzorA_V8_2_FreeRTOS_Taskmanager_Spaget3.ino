@@ -32,9 +32,6 @@ TaskHandle_t DrukknopjesHandle;
 TaskHandle_t EventHandle;
 //TaskHandle_t ;
 
-
-
-
 int in = 0;
 int p;
 int zone;
