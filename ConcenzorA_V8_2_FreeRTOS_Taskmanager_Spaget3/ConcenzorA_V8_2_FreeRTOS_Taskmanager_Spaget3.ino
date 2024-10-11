@@ -254,8 +254,7 @@ void loop() {
 
 
   delay(5);
-  //Serial.print("zone ");
-  //Serial.println(zone);
+
 }
 
 //-----------------------------------------
@@ -835,8 +834,6 @@ void DrukknopjesTask(void *pvParameters) {
   bool drukKnop[aantalDrukknoppen];
   bool drukknopBef[aantalDrukknoppen];
 
-  Serial.println("oke");
-
 
 
   for (int i = 0; i < aantalDrukknoppen; i++) {
@@ -844,7 +841,6 @@ void DrukknopjesTask(void *pvParameters) {
   }
   for (int i = 0; i < aantalDrukknoppen; i++)
     drukknopBef[i] = digitalRead(drukKnopPins[i]);
-  Serial.println("oke2");
 
 
   for (;;) {
