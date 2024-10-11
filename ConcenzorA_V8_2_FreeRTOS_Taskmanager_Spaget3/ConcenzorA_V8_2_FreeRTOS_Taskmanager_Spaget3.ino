@@ -1,13 +1,5 @@
 /*
-  int zone = 2; //incomming byte from UNO
-  int zone2 = 0;
-  char mystr[1];
-  char mysts[1];
-*/
-
-/*
-   sketch ten behoeve van Eindexamen in Podium Zuidheage te Assen.
-   Patricia Swart
+   sketch ten behoeve nieuwe versie Zora van Ludwig Maes en Patricia Swart.
 */
 
 #include <Arduino_FreeRTOS.h>
@@ -215,7 +207,7 @@ void setup() {
               NULL,                   // no parameters are being passed
               2,                      //priority
               &ThemaplankjesHandle);  // task handle
-              //Taak nog niet opgeruimd. 
+                                      //Taak nog niet opgeruimd.
 
   xTaskCreate(DrukknopjesTask,      // function name
               "Drukknopjes",        // human readable name
@@ -241,20 +233,15 @@ void setup() {
 */
 
   Serial.begin(115200);
-  Serial.println(zone);
 }
 
 //-----------------------------------------
 //----------------LOOP---------------------
 //-----------------------------------------
 void loop() {
-
   eventCounter();
 
-
-
   delay(5);
-
 }
 
 //-----------------------------------------
@@ -326,8 +313,12 @@ void zonePrint() {
   if (in >= 69 && in <= 79) zone = 4;  //Laagland
 
   if (zone != zoneBef) {
+    /*
     Serial.print("zone ");
     Serial.println(zone);
+    */
+    MyPrint("zone ");
+    MyPrintln(zone);
   }
 
   zoneBef = zone;
@@ -461,7 +452,7 @@ void PaddenstoelTask(void *pvParameters) {
 
   for (;;) {
     if (zone == 1 || zone == 5 || zone == 6) {
-      paddenstoel1 = analogRead(LDR1);
+      /*     paddenstoel1 = analogRead(LDR1);
       Serial.print("P1 ");
       Serial.print(zone);
       Serial.print(" ");
@@ -473,8 +464,21 @@ void PaddenstoelTask(void *pvParameters) {
       Serial.print(" ");
       Serial.println(paddenstoel2);
 
+*/
+      paddenstoel1 = analogRead(LDR1);
+      MyPrint("P1 ");
+      MyPrint(zone);
+      MyPrint(" ");
+      MyPrintln(paddenstoel1);
 
+      paddenstoel2 = analogRead(LDR2);
+      MyPrint("P2 ");
+      MyPrint(zone);
+      MyPrint(" ");
+      MyPrintln(paddenstoel2);
       padKnopje = digitalRead(padDruk);
+      // indien knopje niet bevestigd, inverteren
+      padKnopje = !padKnopje;
       if (padKnopje == HIGH && padPresstate == 0) {
         digitalWrite(padLED, LOW);
         Serial.print("x ");
@@ -836,6 +840,7 @@ void DrukknopjesTask(void *pvParameters) {
 
 
 
+
   for (int i = 0; i < aantalDrukknoppen; i++) {
     pinMode(drukKnopPins[i], INPUT_PULLUP);
   }
@@ -857,18 +862,6 @@ void DrukknopjesTask(void *pvParameters) {
       drukknopBef[i] = drukKnop[i];
     }
 
-    /*
-    if (k && !presstate8) {
-      Serial.print("k ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate8 = !presstate8;
-    } else if (!k && presstate8) {
-      Serial.print("k ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate8 = !presstate8;
-    }*/
     // ? ms
     vTaskDelay(200 / portTICK_PERIOD_MS);
   }
@@ -912,6 +905,7 @@ void eventCounter() {
       zone = 10;  // event jingle.
       Serial.print("zone ");
       Serial.println(zone);
+      // mogelijks moeten alle andere threads gepauzeerd worden
       delay(10000);
       setBlokje(in);
       event1 = 1;
