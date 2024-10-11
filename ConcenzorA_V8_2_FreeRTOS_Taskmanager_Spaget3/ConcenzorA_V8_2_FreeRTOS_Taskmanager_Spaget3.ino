@@ -78,67 +78,109 @@ void MyPrint(const String &s) {
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(const char str[]) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(str);
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(char c) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(c);
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(unsigned char c, int base = DEC) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(c, base);
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(int n, int base = DEC) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(n, base);
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(unsigned int n, int base = DEC) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(n, base);
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(long n, int base = DEC) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(n, base);
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(unsigned long n, int base = DEC) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(n, base);
     xSemaphoreGive(mutex);
   }
 }
-
 void MyPrint(double n, int precision = 2) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(n, precision);
     xSemaphoreGive(mutex);
   }
 }
-
-
-
-
-
+//println.
+void MyPrintln(const String &s) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(s);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(const char str[]) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(str);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(char c) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(c);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(unsigned char c, int base = DEC) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(c, base);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(int n, int base = DEC) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(n, base);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(unsigned int n, int base = DEC) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(n, base);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(long n, int base = DEC) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(n, base);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(unsigned long n, int base = DEC) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(n, base);
+    xSemaphoreGive(mutex);
+  }
+}
+void MyPrintln(double n, int precision = 2) {
+  if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
+    Serial.println(n, precision);
+    xSemaphoreGive(mutex);
+  }
+}
 
 
 //-----------------------------------------
@@ -167,13 +209,14 @@ void setup() {
               2,               //priority
               &CactusHandle);  // task handle
 
-  /*xTaskCreate(ThemaplankjesTask,      // function name
+  xTaskCreate(ThemaplankjesTask,      // function name
               "Themaplankjes",        // human readable name
               128,                    // stack depth
               NULL,                   // no parameters are being passed
               2,                      //priority
               &ThemaplankjesHandle);  // task handle
-*/
+              //Taak nog niet opgeruimd. 
+
   xTaskCreate(DrukknopjesTask,      // function name
               "Drukknopjes",        // human readable name
               128,                  // stack depth
@@ -787,47 +830,14 @@ void DrukknopjesTask(void *pvParameters) {
 */
 
 #define aantalDrukknoppen 8
-  const bool drukKnopPins[] = { 22, 24, 26, 28, 23, 25, 27, 29 };
+  const int drukKnopPins[] = { 22, 24, 26, 28, 23, 25, 27, 29 };
   const bool drukknopInvert[] = { 0, 0, 1, 1, 0, 0, 1, 0 };
   bool drukKnop[aantalDrukknoppen];
   bool drukknopBef[aantalDrukknoppen];
 
   Serial.println("oke");
 
-  /*  bool d;
-  bool e;
-  bool f;
-  bool g;
-  bool h;
-  bool i;
-  bool j;
-  bool k;
-  bool presstate1 = 0;
-  bool presstate2 = 0;
-  bool presstate3 = 0;
-  bool presstate4 = 0;
-  bool presstate5 = 0;
-  bool presstate6 = 0;
-  bool presstate7 = 0;
-  bool presstate8 = 0; */
 
-  /*  /#018 Drukknopjes
-  pinMode(drukKnop1, INPUT_PULLUP);
-  pinMode(drukKnop2, INPUT_PULLUP);
-  pinMode(drukKnop3, INPUT_PULLUP);
-  pinMode(drukKnop4, INPUT_PULLUP);
-  pinMode(drukKnop5, INPUT_PULLUP);
-  pinMode(drukKnop6, INPUT_PULLUP);
-  pinMode(drukKnop7, INPUT_PULLUP);
-  pinMode(drukKnop8, INPUT_PULLUP);
-   bool pressed[8];
-  int drukknop[8] = {
-    22,
-    24,
-    ,
-    ,
-    ,
-  };*/
 
   for (int i = 0; i < aantalDrukknoppen; i++) {
     pinMode(drukKnopPins[i], INPUT_PULLUP);
@@ -838,121 +848,20 @@ void DrukknopjesTask(void *pvParameters) {
 
 
   for (;;) {
-    for (int i = 0; i < aantalDrukknoppen; i++) {
-      drukKnop[i] = digitalRead(drukKnopPins[i]);
-      //Serial.print("drukKnop =");
-      Serial.print(drukKnop[i]);
-      Serial.print(" ");
-    }
-    Serial.println();
     char karakter = 'd';
     for (int i = 0; i < aantalDrukknoppen; i++) {
+      drukKnop[i] = digitalRead(drukKnopPins[i]);
       if (drukknopBef[i] != drukKnop[i]) {
         Serial.print(karakter);
         Serial.print(" ");
         Serial.print(zone);
-        Serial.println((drukKnop[i]) ? "01" : "00");  // drukknopjes f,g,j waren geinverteerd (normally closed vs open)
+        Serial.println((drukKnop[i] ^ drukknopInvert[i]) ? "01" : "00");  // drukknopjes f,g,j waren geinverteerd (normally closed vs open)
       }
       karakter++;
       drukknopBef[i] = drukKnop[i];
     }
 
     /*
-    d = digitalRead(drukKnop1);
-    e = digitalRead(drukKnop2);
-    f = digitalRead(drukKnop3);
-    g = digitalRead(drukKnop4);
-
-    h = digitalRead(drukKnop5);
-    i = digitalRead(drukKnop6);
-    j = digitalRead(drukKnop7);
-    k = digitalRead(drukKnop8);
-*/
-
-    /*
-    if (d && !presstate1) {
-      Serial.print("d ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate1 = !presstate1;
-    } else if (!d && presstate1) {
-      Serial.print("d ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate1 = !presstate1;
-    }
-
-    if (e && !presstate2) {
-      Serial.print("e ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate2 = !presstate2;
-    } else if (!e && presstate2) {
-      Serial.print("e ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate2 = !presstate2;
-    }
-
-    if (!f && !presstate3) {
-      Serial.print("f ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate3 = !presstate3;
-    } else if (f && presstate3) {
-      Serial.print("f ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate3 = !presstate3;
-    }
-    if (!g && !presstate4) {
-      Serial.print("g ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate4 = !presstate4;
-    } else if (g && presstate4) {
-      Serial.print("g ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate4 = !presstate4;
-    }
-
-    if (h && !presstate5) {
-      Serial.print("h ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate5 = !presstate5;
-    } else if (!h && presstate5) {
-      Serial.print("h ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate5 = !presstate5;
-    }
-
-    if (i && !presstate6) {
-      Serial.print("i ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate6 = !presstate6;
-    } else if (!i && presstate6) {
-      Serial.print("i ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate6 = !presstate6;
-    }
-
-
-    if (!j && !presstate7) {
-      Serial.print("j ");
-      Serial.print(zone);
-      Serial.println("01");
-      presstate7 = !presstate7;
-    } else if (j && presstate7) {
-      Serial.print("j ");
-      Serial.print(zone);    // zone
-      Serial.println("00");  // status
-      presstate7 = !presstate7;
-    }
     if (k && !presstate8) {
       Serial.print("k ");
       Serial.print(zone);
@@ -964,7 +873,7 @@ void DrukknopjesTask(void *pvParameters) {
       Serial.println("00");  // status
       presstate8 = !presstate8;
     }*/
-    // 5 ms
+    // ? ms
     vTaskDelay(200 / portTICK_PERIOD_MS);
   }
 }
