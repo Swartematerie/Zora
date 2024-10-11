@@ -455,7 +455,7 @@ void PaddenstoelTask(void *pvParameters) {
 
   for (;;) {
     if (zone == 1 || zone == 5 || zone == 6) {
-      //*     
+      //*
       paddenstoel1 = analogRead(LDR1);
       Serial.print("P1 ");
       Serial.print(zone);
@@ -480,10 +480,11 @@ void PaddenstoelTask(void *pvParameters) {
       MyPrint(zone);
       MyPrint(" ");
       MyPrintln(paddenstoel2);
-      */
+      //*/
       padKnopje = digitalRead(padDruk);
       // indien knopje niet bevestigd, inverteren
       padKnopje = !padKnopje;
+      //*
       if (padKnopje == HIGH && padPresstate == 0) {
         digitalWrite(padLED, LOW);
         Serial.print("x ");
@@ -497,6 +498,7 @@ void PaddenstoelTask(void *pvParameters) {
         Serial.println("00");
         padPresstate = 0;
       }
+      //*/
     }
     vTaskDelay( 1 / portTICK_PERIOD_MS );
   }
