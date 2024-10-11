@@ -64,6 +64,81 @@ SemaphoreHandle_t mutex;
 
 
 
+
+
+//-----------------------------------------
+//----------------Setup--------------------
+//-----------------------------------------
+void setup() {
+
+  xTaskCreate(NavigationTask,      // function name
+              "Navigation",        // human readable name
+              128,                 // stack depth
+              NULL,                // no parameters are being passed
+              2,                   //priority hoger cijfer is hogere prioiteit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              &NavigationHandle);  // task handle
+
+  xTaskCreate(PaddenstoelTask,      // function name
+              "Paddenstoel",        // human readable name
+              128,                  // stack depth
+              NULL,                 // no parameters are being passed
+              2,                    //priority
+              &PaddenstoelHandle);  // task handle
+
+  xTaskCreate(CactusTask,      // function name
+              "Cactus",        // human readable name
+              128,             // stack depth
+              NULL,            // no parameters are being passed
+              2,               //priority
+              &CactusHandle);  // task handle
+
+  xTaskCreate(ThemaplankjesTask,      // function name
+              "Themaplankjes",        // human readable name
+              128,                    // stack depth
+              NULL,                   // no parameters are being passed
+              2,                      //priority
+              &ThemaplankjesHandle);  // task handle
+                                      //Taak nog niet opgeruimd.
+
+  xTaskCreate(DrukknopjesTask,      // function name
+              "Drukknopjes",        // human readable name
+              128,                  // stack depth
+              NULL,                 // no parameters are being passed
+              2,                    //priority
+              &DrukknopjesHandle);  // task handle
+
+  /*xTaskCreate(EventTask,      // function name
+              "Event",        // human readable name
+              128,            // stack depth
+              NULL,           // no parameters are being passed
+              2,              //priority
+              &EventHandle);  // task handle
+*/
+  /*  xTaskCreate(Task,   // function name
+              "",     // human readable name
+              128,          // stack depth
+              NULL,         // no parameters are being passed
+              2,            //priority
+              Handle);        // task handle
+
+*/
+
+  Serial.begin(115200);
+}
+
+//-----------------------------------------
+//----------------LOOP---------------------
+//-----------------------------------------
+void loop() {
+  eventCounter();
+
+  delay(5);
+}
+
+//-----------------------------------------
+//----------------Functies-----------------
+//-----------------------------------------
+
 void MyPrint(const String &s) {
   if (xSemaphoreTake(mutex, portMAX_DELAY) == pdTRUE) {
     Serial.print(s);
@@ -174,79 +249,6 @@ void MyPrintln(double n, int precision = 2) {
   }
 }
 
-
-//-----------------------------------------
-//----------------Setup--------------------
-//-----------------------------------------
-void setup() {
-
-  xTaskCreate(NavigationTask,      // function name
-              "Navigation",        // human readable name
-              128,                 // stack depth
-              NULL,                // no parameters are being passed
-              2,                   //priority
-              &NavigationHandle);  // task handle
-
-  xTaskCreate(PaddenstoelTask,      // function name
-              "Paddenstoel",        // human readable name
-              128,                  // stack depth
-              NULL,                 // no parameters are being passed
-              2,                    //priority
-              &PaddenstoelHandle);  // task handle
-
-  xTaskCreate(CactusTask,      // function name
-              "Cactus",        // human readable name
-              128,             // stack depth
-              NULL,            // no parameters are being passed
-              2,               //priority
-              &CactusHandle);  // task handle
-
-  xTaskCreate(ThemaplankjesTask,      // function name
-              "Themaplankjes",        // human readable name
-              128,                    // stack depth
-              NULL,                   // no parameters are being passed
-              2,                      //priority
-              &ThemaplankjesHandle);  // task handle
-                                      //Taak nog niet opgeruimd.
-
-  xTaskCreate(DrukknopjesTask,      // function name
-              "Drukknopjes",        // human readable name
-              128,                  // stack depth
-              NULL,                 // no parameters are being passed
-              2,                    //priority
-              &DrukknopjesHandle);  // task handle
-
-  /*xTaskCreate(EventTask,      // function name
-              "Event",        // human readable name
-              128,            // stack depth
-              NULL,           // no parameters are being passed
-              2,              //priority
-              &EventHandle);  // task handle
-*/
-  /*  xTaskCreate(Task,   // function name
-              "",     // human readable name
-              128,          // stack depth
-              NULL,         // no parameters are being passed
-              2,            //priority
-              Handle);        // task handle
-
-*/
-
-  Serial.begin(115200);
-}
-
-//-----------------------------------------
-//----------------LOOP---------------------
-//-----------------------------------------
-void loop() {
-  eventCounter();
-
-  delay(5);
-}
-
-//-----------------------------------------
-//----------------Functies-----------------
-//-----------------------------------------
 void setBlokje(int in) {
 
   // Serial.print("in = ");
@@ -313,19 +315,20 @@ void zonePrint() {
   if (in >= 69 && in <= 79) zone = 4;  //Laagland
 
   if (zone != zoneBef) {
-    /*
+    //*
     Serial.print("zone ");
     Serial.println(zone);
-    */
+    /*/
     MyPrint("zone ");
     MyPrintln(zone);
+    */
   }
 
   zoneBef = zone;
 }
 
 
-//
+
 void NavigationTask(void *pvParameters) {
   (void)pvParameters;
   //Declaration Navigation
@@ -452,7 +455,8 @@ void PaddenstoelTask(void *pvParameters) {
 
   for (;;) {
     if (zone == 1 || zone == 5 || zone == 6) {
-      /*     paddenstoel1 = analogRead(LDR1);
+      //*     
+      paddenstoel1 = analogRead(LDR1);
       Serial.print("P1 ");
       Serial.print(zone);
       Serial.print(" ");
@@ -464,7 +468,7 @@ void PaddenstoelTask(void *pvParameters) {
       Serial.print(" ");
       Serial.println(paddenstoel2);
 
-*/
+/*/
       paddenstoel1 = analogRead(LDR1);
       MyPrint("P1 ");
       MyPrint(zone);
@@ -476,6 +480,7 @@ void PaddenstoelTask(void *pvParameters) {
       MyPrint(zone);
       MyPrint(" ");
       MyPrintln(paddenstoel2);
+      */
       padKnopje = digitalRead(padDruk);
       // indien knopje niet bevestigd, inverteren
       padKnopje = !padKnopje;
@@ -493,7 +498,7 @@ void PaddenstoelTask(void *pvParameters) {
         padPresstate = 0;
       }
     }
-    //vTaskDelay( 250 / portTICK_PERIOD_MS );
+    vTaskDelay( 1 / portTICK_PERIOD_MS );
   }
 }
 
